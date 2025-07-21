@@ -2,15 +2,17 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
     "name": "lcas-gallium-ari35",
-    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    // COMMENT OUT the "image" line as you will now build a custom image
     "image": "lcas.lincoln.ac.uk/lcas/pal-gallium-pal-metapkg-development-ari:35-dev",
-    // "build": {
-    // 	"dockerfile": "Dockerfile",
-    // 	"context": "."
-    // },
+
+    // UNCOMMENT and configure the "build" section to use your custom Dockerfile
+    //"build": {
+   //   "dockerfile": "Dockerfile", // Path to your new Dockerfile
+  //    "context": "." // The build context is the root of your project
+ //   },
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
-        "ghcr.io/devcontainers/features/desktop-lite:1": {}
+       // "ghcr.io/devcontainers/features/desktop-lite:1": {}
     },
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
     // "forwardPorts": [],
@@ -27,16 +29,21 @@
         }
     },
     // Use 'postCreateCommand' to run commands after the container is created.
+    // Keep your run.sh here for runtime configurations.
     "postCreateCommand": "bash .devcontainer/run.sh",
-    "containerUser": "root",
+    "containerUser": "root", // Your container runs as root
     // Configure tool-specific properties.
     // "customizations": {},
     "runArgs": [
-        "--security-opt",
-        "seccomp=unconfined",
-        "--cap-add=NET_ADMIN",
-        "--network=host"
-    ],
+    "--security-opt",
+    "seccomp=unconfined",
+    "--cap-add=NET_ADMIN",
+    "--network=host",
+    "-v", "/run/user/1000/pulse:/run/user/1000/pulse",
+    "--device=/dev/snd",
+    "-e", "PULSE_SERVER=unix:/run/user/1000/pulse/native",
+    "-v", "/home/ari-user/.config/pulse/cookie:/root/.config/pulse/cookie"
+],
     "containerEnv": {
         "ROS_LOCALHOST_ONLY": "0",
         "LIBGL_ALWAYS_SOFTWARE": "1" // Needed for software rendering of opengl
