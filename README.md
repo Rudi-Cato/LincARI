@@ -30,7 +30,7 @@ Then:
 2. Locate and move to the LincARI folder on your system; e.g. `cd /home/computing/LincARI`
 3. Pull the latest changes: `git pull`
 
-#### 2. Open the ROS2 container
+#### 2. Open the ROS container
 The system configuration for writing and executing ROS code is already setup for you in a Docker container which is directly importable into your VS Code workspace. This will avoid you executing many additional steps the you will need instead to perform if you want to run it on your PC.
 
 1. Open VS Code (e.g., Alt+F2, type `code`, press Enter)
